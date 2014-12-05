@@ -1,11 +1,26 @@
 package com.example.calendarapp;
 
+
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
+import org.json.simple.parser.JSONParser;
+
 
 import android.accounts.Account;
 import android.accounts.AccountManager;
@@ -67,7 +82,7 @@ public class MainActivity extends Activity {
 		
 		String[] selectionArgs = new String[] {email, "com.google",
 		        email}; 
-		getEvents();
+		String[] timeSlots=getFreeTimeSlots();
 		
 	}
 	
@@ -88,9 +103,88 @@ public class MainActivity extends Activity {
 		return gmail;
 	}
 	
+	public void setEvents()
+	{
+		List<Event> eventsObjs=new ArrayList();
+		 try {
+			URLConnection urlConn = new URL("http://api.eventful.com/json/events/search?app_key=6v2qKKF676QjNdPd&where=32.746682,-117.162741&within=25").openConnection();
+			BufferedReader in=new BufferedReader(new InputStreamReader(urlConn.getInputStream()));
+			
+			StringBuffer sbf=new StringBuffer();
+			String inLine;
+			while((inLine=in.readLine())!=null)
+			{
+				sbf.append(inLine);
+			}
+			JSONParser jsonParser = new JSONParser();
+			JSONObject jsonObject = null;
+			try {
+				jsonObject = (JSONObject)jsonParser.parse(sbf.toString());
+			} catch (org.json.simple.parser.ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			String events=jsonObject.get("events").toString();
+			try {
+				jsonObject=(JSONObject)jsonParser.parse(events);
+			} catch (org.json.simple.parser.ParseException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			JSONArray jsonArr=(JSONArray)jsonObject.get("event");
+			Iterator i=jsonArr.iterator();
+			while(i.hasNext())
+			{
+				String event=i.next().toString();
+				try {
+					jsonObject=(JSONObject)jsonParser.parse(event);
+				} catch (org.json.simple.parser.ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+				Event eventObj=new Event();
+				eventObj.setLatitude(jsonObject.get("latitude").toString());
+				eventObj.setLongitude(jsonObject.get("longitude").toString());
+				eventObj.setCity_name(jsonObject.get("city_name").toString());
+				eventObj.setId(jsonObject.get("id").toString());
+				eventObj.setTitle(jsonObject.get("title").toString());
+				/*eventObj.setDescription(jsonObject.get("description").toString());
+				*/eventObj.setStart_time(jsonObject.get("start_time").toString());
+				eventObj.setVenu_address(jsonObject.get("venue_address").toString());
+				eventObj.setVenu_name(jsonObject.get("venue_name").toString());
+				
+				String image=jsonObject.get("image").toString();
+				try {
+					jsonObject=(JSONObject)jsonParser.parse(image);
+				} catch (org.json.simple.parser.ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String medium=jsonObject.get("medium").toString();
+				try {
+					jsonObject=(JSONObject)jsonParser.parse(medium);
+				} catch (org.json.simple.parser.ParseException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				String url=jsonObject.get("url").toString();
+				eventObj.setImageUrl(url);
+				eventsObjs.add(eventObj);
+			}
+
+			
+		 } catch (MalformedURLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
 	
-	
-	 public void getEvents() {
+	 public String[] getFreeTimeSlots() {
 		    // Fetch a list of all calendars sync'd with the device and their display names
 		  Cursor cursor = contentResolver.query(CALENDAR_URI, FIELDS, null, null, null);
 
@@ -169,7 +263,8 @@ public class MainActivity extends Activity {
 		    
 		    TextView t1=(TextView)findViewById(R.id.textView1);
 		    t1.setText(freeTimeSlot[1]);
-	}
+		    return freeTimeSlot;
+	 }
 
 	 public static String getDate(long milliSeconds, String dateFormat)
 		{
