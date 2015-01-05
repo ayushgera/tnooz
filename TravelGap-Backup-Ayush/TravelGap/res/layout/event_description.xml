@@ -1,0 +1,138 @@
+<!--
+ <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingBottom="@dimen/activity_vertical_margin"
+    android:paddingLeft="@dimen/activity_horizontal_margin"
+    android:paddingRight="@dimen/activity_horizontal_margin"
+    android:paddingTop="@dimen/activity_vertical_margin"
+    
+                            
+    tools:context=".MainActivity" >
+
+
+<TextView
+                            android:layout_gravity="center"
+                            android:gravity="center"
+                            android:textSize="12dp"
+                            android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="fill_parent"
+                                android:layout_height="fill_parent"
+                                android:layout_alignParentLeft="true"
+                                android:layout_alignParentTop="true"
+                                android:background="#80000000"
+                                android:text="dsafkajsdfsaf asdfahsdfasdf asdhfadsfhasdf asdfhadsfhasdf"
+                                android:alpha=".4" />
+
+</RelativeLayout>-->
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/relativeLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/concert" >
+
+    <!--
+    <ImageView
+     	android:layout_width="100dp"
+     	 android:layout_height="100dp" 
+     	 android:layout_centerInParent="true"
+     	 android:src="@drawable/airtravel" 
+     >
+        
+    </ImageView>
+    -->
+
+    <LinearLayout
+        android:id="@+id/linearLayout1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical"
+        android:paddingBottom="15dp"
+        android:paddingTop="15dp" >
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:shadowColor="#000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="6"
+            android:id="@+id/textView2"
+            android:textColor="#FFF"
+            android:textSize="36sp"
+            android:textStyle="bold" >
+        </TextView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:textColor="#CCC"
+            android:textSize="12sp" >
+        </TextView>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_below="@+id/linearLayout1"
+        android:background="#7000"
+        android:layout_marginLeft="2dp"
+        android:layout_marginTop="27dp" >
+
+        <TextView
+            android:layout_width="198dp"
+            android:layout_height="wrap_content"
+            android:paddingLeft="5dp"
+            android:paddingRight="5dp"
+            android:paddingTop="5dp"
+            android:shadowColor="#000"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="6"
+            android:text="Welcome to the biggest, trendiest party ever. You wouldn&#39;t want to be anywhere else if you know what we have lined up for you. From belly dancers to fire girls, VJ Juhi will keep you on your feet dancing the night away to the tunes and acts by Matt Darey, DJ Swing, DJ Rocky, Coyote Ugly Dancers and much more with a special splendid display of the finest crackers."
+            android:textColor="#FFF"
+            android:textSize="15sp" />
+
+    </LinearLayout>
+
+    <Button
+        android:id="@+id/button1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:background="#00F"
+        android:gravity="center"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp"
+        android:text="Check Transport"
+        android:textColor="#FFF" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:layout_below="@+id/imageView1"
+        android:layout_gravity="center"
+                            
+        android:text="Find on Map" />
+
+    <ImageView
+        android:id="@+id/imageView1"
+        android:layout_width="100dp"
+        android:layout_height="100dp"
+        android:layout_alignParentRight="true"
+        android:layout_centerVertical="true"
+        android:src="@drawable/google_map" />
+
+</RelativeLayout>
